@@ -1,0 +1,14 @@
+require:
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.0
+
+RSpec:
+  Enabled: true
+  ExampleLength:
+    Max: 5
+
+Documentation:
+  Enabled: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rexml/parsers/streamparser'
 require_relative 'product_feed_listener'
 

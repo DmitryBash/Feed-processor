@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'lib/product_feed_processor'
 
 file_path = 'feed.xml'

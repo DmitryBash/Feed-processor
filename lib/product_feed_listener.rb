@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rexml/parsers/streamparser'
 require 'rexml/streamlistener'
 
@@ -32,20 +34,20 @@ class ProductFeedListener
       process_product if valid_product?
       reset_product
     end
-  
+
     @current_element = nil
   end
-  
+
   private
-  
+
   def valid_product?
     @current_product[:id] && @current_product[:title] && @current_product[:description]
   end
-  
+
   def process_product
     @batcher.add(Product.new(@current_product[:id], @current_product[:title], @current_product[:description]))
   end
-  
+
   def reset_product
     @current_product = {}
   end

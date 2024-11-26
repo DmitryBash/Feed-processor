@@ -1,5 +1,6 @@
-require 'json'
+# frozen_string_literal: true
 
+require 'json'
 # This class is responsible for batching products into JSON arrays and sending them to an external service.
 # To ensure the JSON batch remains under the 5 MB limit, we account for the following:
 # - JSON_ARRAY_OVERHEAD_BYTES: Represents the size of the opening `[` and closing `]` brackets in a JSON array.
@@ -22,9 +23,7 @@ class ProductBatcher
     product_json = JSON.dump(product.to_h)
     product_size = product_json.bytesize + (@current_batch.empty? ? 0 : JSON_COMMA_OVERHEAD_BYTES)
 
-    if (@current_batch_size + product_size) > MAX_BATCH_SIZE_BYTES
-      process_batch
-    end
+    process_batch if (@current_batch_size + product_size) > MAX_BATCH_SIZE_BYTES
 
     @current_batch << product.to_h
     @current_batch_size += product_size

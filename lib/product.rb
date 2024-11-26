@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Product
   attr_reader :id, :title, :description
 
