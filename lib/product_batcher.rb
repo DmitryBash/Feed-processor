@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require 'json'
+
 # This class is responsible for batching products into JSON arrays and sending them to an external service.
 # To ensure the JSON batch remains under the 5 MB limit, we account for the following:
 # - JSON_ARRAY_OVERHEAD_BYTES: Represents the size of the opening `[` and closing `]` brackets in a JSON array.
 # - JSON_COMMA_OVERHEAD_BYTES: Represents the size of a comma (`,`) that separates items in a JSON array.
 # These values are essential for accurately calculating the size of the JSON payload while adding new products
 # to the batch. Without these adjustments, the payload size might exceed the specified limit, causing errors.
-
 class ProductBatcher
   MAX_BATCH_SIZE_BYTES = 5 * 1_048_576 # 5 MB
   JSON_ARRAY_OVERHEAD_BYTES = 2

@@ -11,12 +11,12 @@ class ExternalService
 
   def call(batch)
     @batch_num += 1
-    my_pretty_print(batch)
+    print_batch_summary(batch)
   end
 
   private
 
-  def my_pretty_print(batch)
+  def print_batch_summary(batch)
     products = JSON.parse(batch)
 
     puts format("\e[1mReceived batch%4d\e[22m", @batch_num)

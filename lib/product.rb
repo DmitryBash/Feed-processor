@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Product
-  attr_reader :id, :title, :description
-
-  def initialize(id, title, description)
+  def initialize(id: nil, title: nil, description: nil)
     @id = id
     @title = title
     @description = description
@@ -11,5 +9,9 @@ class Product
 
   def to_h
     { id: @id, title: @title, description: @description }
+  end
+
+  def valid?
+    @id && @title && @description
   end
 end

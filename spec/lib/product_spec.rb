@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Product do
-  let(:product) { described_class.new('123', 'Test Product', 'A description') }
+  let(:product) { described_class.new(id: '123', title: 'Test Product', description: 'A description') }
 
   describe '#to_h' do
     it 'returns a hash representation of the product' do
