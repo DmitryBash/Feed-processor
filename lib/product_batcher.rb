@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-require 'json'
+require 'oj'
 
-# This class is responsible for batching products into JSON arrays and sending them to an external service.
-# To ensure the JSON batch remains under the 5 MB limit, we account for the following:
-# - JSON_ARRAY_OVERHEAD_BYTES: Represents the size of the opening `[` and closing `]` brackets in a JSON array.
-# - JSON_COMMA_OVERHEAD_BYTES: Represents the size of a comma (`,`) that separates items in a JSON array.
-# These values are essential for accurately calculating the size of the JSON payload while adding new products
-# to the batch. Without these adjustments, the payload size might exceed the specified limit, causing errors.
+# This class batches products into JSON arrays and sends them to an external service,
+# ensuring the JSON batch remains under the 5 MB limit.
 class ProductBatcher
   MAX_BATCH_SIZE_BYTES = 5 * 1_048_576 # 5 MB
   JSON_ARRAY_OVERHEAD_BYTES = 2
@@ -20,7 +16,7 @@ class ProductBatcher
   end
 
   def add(product)
-    product_json = JSON.dump(product.to_h)
+    product_json = Oj.dump(product.to_h, mode: :compat)
     product_size = product_json.bytesize + (@current_batch.empty? ? 0 : JSON_COMMA_OVERHEAD_BYTES)
 
     process_batch if (@current_batch_size + product_size) > MAX_BATCH_SIZE_BYTES
@@ -36,7 +32,7 @@ class ProductBatcher
   private
 
   def process_batch
-    batch_json = JSON.dump(@current_batch)
+    batch_json = Oj.dump(@current_batch, mode: :compat)
     @service.call(batch_json)
     reset_batch
   end

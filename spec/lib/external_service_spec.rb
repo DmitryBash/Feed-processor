@@ -2,7 +2,7 @@
 
 RSpec.describe ExternalService do
   let(:service) { described_class.new }
-  let(:batch) { JSON.dump([{ id: '1', title: 'Product 1', description: 'Description 1' }]) }
+  let(:batch) { Oj.dump([{ id: '1', title: 'Product 1', description: 'Description 1' }]) }
 
   describe '#call' do
     it 'prints the batch details' do

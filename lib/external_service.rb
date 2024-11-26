@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'json'
+require 'oj'
 
 class ExternalService
   ONE_MEGA_BYTE = 1_048_576.0
@@ -17,7 +17,7 @@ class ExternalService
   private
 
   def print_batch_summary(batch)
-    products = JSON.parse(batch)
+    products = Oj.load(batch, mode: :strict)
 
     puts format("\e[1mReceived batch%4d\e[22m", @batch_num)
     puts format('Size: %10.2fMB', (batch.bytesize / ONE_MEGA_BYTE))
